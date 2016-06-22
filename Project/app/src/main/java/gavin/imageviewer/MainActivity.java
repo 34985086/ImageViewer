@@ -52,25 +52,6 @@ public class MainActivity extends Activity {
 
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
-				//LinearLayout line = new LinearLayout(MainActivity.this);
-				//line.setOrientation(LinearLayout.HORIZONTAL);
-
-				//ImageView image = new ImageView(MainActivity.this);
-				//image.setImageBitmap(BitmapFactory.decodeFile(fileNames.get(position)));
-				//image.setScaleType(ImageView.ScaleType.MATRIX);
-				//image.setIm
-				/*
-				image.setLayoutParams(new ViewGroup.LayoutParams(
-						ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
-				));*/
-/*
-				TextView text = new TextView(MainActivity.this);
-				text.setText(names.get(position));
-				text.setTextSize(20);
-				text.setTextColor(Color.RED);
-*/
-				//line.addView(image);
-				//line.addView(text);
 				View layout = convertView;
 				if (convertView == null) {
 					layout = inflater.inflate(R.layout.prevview, null);
