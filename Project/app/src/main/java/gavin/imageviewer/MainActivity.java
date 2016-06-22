@@ -12,8 +12,11 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends Activity {
 
@@ -23,6 +26,7 @@ public class MainActivity extends Activity {
 	ArrayList<String> names = new ArrayList<>();
 	ArrayList<String> descs = new ArrayList<>();
 	ArrayList<String> fileNames = new ArrayList<>();
+	ArrayList<Long> dateTaken = new ArrayList<>();
 
 
 	@Override
@@ -59,6 +63,11 @@ public class MainActivity extends Activity {
 
 				ImageView imageView = (ImageView) layout.findViewById(R.id.preView);
 				imageView.setImageBitmap(BitmapFactory.decodeFile(fileNames.get(position)));
+
+				TextView name = (TextView)layout.findViewById(R.id.name);
+				TextView time = (TextView)layout.findViewById(R.id.dateTaken);
+				name.setText(names.get(position));
+				time.setText(getDateTime("yy-MM-dd HH:mm:ss", dateTaken.get(position)));
 				return layout;
 			}
 		};
@@ -82,6 +91,9 @@ public class MainActivity extends Activity {
 		Cursor cursor = getContentResolver().query(
 				MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
 
+		for(String name:cursor.getColumnNames()){
+			System.out.println(name);
+		}
 		while(cursor.moveToNext()){
 			String name = cursor.getString(cursor.getColumnIndex(
 					MediaStore.Images.Media.DISPLAY_NAME));
@@ -95,6 +107,14 @@ public class MainActivity extends Activity {
 			names.add(name);
 			descs.add(desc);
 			fileNames.add(new String(data, 0, data.length - 1));
+
+			dateTaken.add(cursor.getLong(cursor.getColumnIndex(
+					MediaStore.Images.Media.DATE_TAKEN)));
 		}
+	}
+
+	public static String getDateTime(String pattern, long mseconds){
+		SimpleDateFormat date = new SimpleDateFormat(pattern);
+		return date.format(new Date(mseconds));
 	}
 }
