@@ -1,6 +1,7 @@
 package gavin.imageviewer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -78,7 +79,15 @@ public class MainActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 			                        int position, long id) {
-				System.out.println("click " + position + " item");
+				//System.out.println("click " + position + " item");
+
+				View viewDialog = getLayoutInflater().inflate(R.layout.image, null);
+				ImageView image = (ImageView)viewDialog.findViewById(R.id.imageView);
+				image.setImageBitmap(BitmapFactory.decodeFile(fileNames.get(position)));
+
+				new AlertDialog.Builder(MainActivity.this)
+						.setView(viewDialog).setPositiveButton("确定", null)
+						.show();
 			}
 		});
 	}
