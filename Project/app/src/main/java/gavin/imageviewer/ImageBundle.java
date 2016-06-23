@@ -26,16 +26,22 @@ public class ImageBundle implements Serializable {
 		return new BitmapDrawable(null, bitmap);
 	}
 
-	public void next(){
+	public Boolean next(){
 		if(position < names.size() - 1)
 		{
 			position++;
+			return true;
+		}else{
+			return false;
 		}
 	}
 
-	public void prev(){
+	public Boolean prev(){
 		if(position > 0){
 			position--;
+			return true;
+		}else{
+			return false;
 		}
 	}
 }

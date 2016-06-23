@@ -1,18 +1,13 @@
 package gavin.imageviewer;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.content.Intent;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageSwitcher;
-import android.widget.ImageView;
 import android.widget.ViewSwitcher;
 
 public class ViewActivity extends Activity{
@@ -20,7 +15,6 @@ public class ViewActivity extends Activity{
 	final int FLIP_DISTANCE = 50;
 	private GestureDetector detector;
 	private ImageSwitcher switcher;
-	private int imgPos;
 	private ImageBundle images;
 
 	@Override
@@ -73,21 +67,19 @@ public class ViewActivity extends Activity{
 				System.out.println("onFling");
 				if(e1.getX() - e2.getX() > FLIP_DISTANCE){
 					System.out.println("From right to left");
-					//((ImageView) switcher.getNextView()).setAdapter(adapter);
-					//switcher.showNext();
-					images.next();
-					switcher.setInAnimation(ViewActivity.this, R.anim.slide_in_right);
-					switcher.setOutAnimation(ViewActivity.this, R.anim.slide_out_left);
-					switcher.setImageDrawable(images.getDrawable());
+					if(images.next()) {
+						switcher.setInAnimation(ViewActivity.this, R.anim.slide_in_right);
+						switcher.setOutAnimation(ViewActivity.this, R.anim.slide_out_left);
+						switcher.setImageDrawable(images.getDrawable());
+					}
 					return true;
 				}else if(e2.getX() - e1.getX() > FLIP_DISTANCE){
 					System.out.println("From left to right");
-					//switcher.showPrevious();
-					images.prev();
-
-					switcher.setInAnimation(ViewActivity.this, android.R.anim.slide_in_left);
-					switcher.setOutAnimation(ViewActivity.this, android.R.anim.slide_out_right);
-					switcher.setImageDrawable(images.getDrawable());
+					if(images.prev()) {
+						switcher.setInAnimation(ViewActivity.this, R.anim.slide_in_left);
+						switcher.setOutAnimation(ViewActivity.this, R.anim.slide_out_right);
+						switcher.setImageDrawable(images.getDrawable());
+					}
 					return true;
 				}else{
 					return false;
