@@ -124,6 +124,4 @@ public class MainActivity extends Activity {
 		SimpleDateFormat date = new SimpleDateFormat(pattern);
 		return date.format(new Date(mseconds));
 	}
-
-	//public class imageDetail
 }
