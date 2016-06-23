@@ -2,6 +2,7 @@ package gavin.imageviewer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -80,14 +81,23 @@ public class MainActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 			                        int position, long id) {
 				//System.out.println("click " + position + " item");
-
+				/*
 				View viewDialog = getLayoutInflater().inflate(R.layout.image, null);
 				ImageView image = (ImageView)viewDialog.findViewById(R.id.imageView);
 				image.setImageBitmap(BitmapFactory.decodeFile(fileNames.get(position)));
 
+
 				new AlertDialog.Builder(MainActivity.this)
-						.setView(viewDialog).setPositiveButton("确定", null)
+						.setView(viewDialog)
+						.setPositiveButton("确定", null)
 						.show();
+				*/
+				ImageBundle imageBundle = new ImageBundle(fileNames, position);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("ImageBundle", imageBundle);
+				Intent intent = new Intent(MainActivity.this, ViewActivity.class);
+				intent.putExtras(bundle);
+				startActivity(intent);
 			}
 		});
 	}
@@ -126,4 +136,6 @@ public class MainActivity extends Activity {
 		SimpleDateFormat date = new SimpleDateFormat(pattern);
 		return date.format(new Date(mseconds));
 	}
+
+	//public class imageDetail
 }
