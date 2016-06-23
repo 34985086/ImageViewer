@@ -1,5 +1,10 @@
 package gavin.imageviewer;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -15,15 +20,22 @@ public class ImageBundle implements Serializable {
 		this.names = names;
 	}
 
-	public int getPosition(){
-		return position;
+	public Drawable getDrawable(){
+
+		Bitmap bitmap = BitmapFactory.decodeFile(names.get(position));
+		return new BitmapDrawable(null, bitmap);
 	}
 
-	public String getName(int position){
-		if(position < names.size()){
-			return names.get(position);
-		}else{
-			return null;
+	public void next(){
+		if(position < names.size() - 1)
+		{
+			position++;
+		}
+	}
+
+	public void prev(){
+		if(position > 0){
+			position--;
 		}
 	}
 }
