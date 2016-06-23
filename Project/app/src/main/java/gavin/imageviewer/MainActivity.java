@@ -80,18 +80,6 @@ public class MainActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 			                        int position, long id) {
-				//System.out.println("click " + position + " item");
-				/*
-				View viewDialog = getLayoutInflater().inflate(R.layout.image, null);
-				ImageView image = (ImageView)viewDialog.findViewById(R.id.imageView);
-				image.setImageBitmap(BitmapFactory.decodeFile(fileNames.get(position)));
-
-
-				new AlertDialog.Builder(MainActivity.this)
-						.setView(viewDialog)
-						.setPositiveButton("确定", null)
-						.show();
-				*/
 				ImageBundle imageBundle = new ImageBundle(fileNames, position);
 				Bundle bundle = new Bundle();
 				bundle.putSerializable("ImageBundle", imageBundle);
