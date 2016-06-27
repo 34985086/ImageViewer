@@ -2,12 +2,14 @@ package gavin.imageviewer;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.ViewSwitcher;
 
 public class ViewActivity extends Activity{
@@ -28,10 +30,15 @@ public class ViewActivity extends Activity{
 		switcher.setFactory(new ViewSwitcher.ViewFactory() {
 			@Override
 			public View makeView() {
-                return  LayoutInflater.from(ViewActivity.this).inflate(R.layout.image, null);
+				LayoutInflater inflater = LayoutInflater.from(ViewActivity.this);
+				View view = inflater.inflate(R.layout.image, null);
+				ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
+				DisplayMetrics dm = ViewActivity.this.getResources().getDisplayMetrics();
+				imageView.setMinimumHeight(dm.heightPixels);
+                return view;
 			}
 		});
-		switcher.setImageDrawable(images.getDrawable());
+		switcher.setImageDrawable(images.getDrawable(ViewActivity.this.getResources()));
 
 		detector = new GestureDetector(this, new OnGestureListener() {
 			@Override
@@ -70,7 +77,7 @@ public class ViewActivity extends Activity{
 					if(images.next()) {
 						switcher.setInAnimation(ViewActivity.this, R.anim.slide_in_right);
 						switcher.setOutAnimation(ViewActivity.this, R.anim.slide_out_left);
-						switcher.setImageDrawable(images.getDrawable());
+						switcher.setImageDrawable(images.getDrawable(ViewActivity.this.getResources()));
 					}
 					return true;
 				}else if(e2.getX() - e1.getX() > FLIP_DISTANCE){
@@ -78,7 +85,7 @@ public class ViewActivity extends Activity{
 					if(images.prev()) {
 						switcher.setInAnimation(ViewActivity.this, R.anim.slide_in_left);
 						switcher.setOutAnimation(ViewActivity.this, R.anim.slide_out_right);
-						switcher.setImageDrawable(images.getDrawable());
+						switcher.setImageDrawable(images.getDrawable(ViewActivity.this.getResources()));
 					}
 					return true;
 				}else{
